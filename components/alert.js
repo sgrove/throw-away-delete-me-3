@@ -55,18 +55,53 @@ export default function Alert({ preview }) {
         'bg-accent-1 border-accent-2': !preview,
       })}
     >
-      <Container>
-        <div className="py-2 text-center text-sm">
-          <span>
-            <a
-              className="App-link"
-              href={`https://www.onegraph.com/dashboard/app/${ONE_GRAPH_APP_ID}/auth/auth-guardian`}
-              target="_blank"
-              rel="noopener noreferrer"
+      <div className="py-2 text-center text-sm block">
+        <span>
+          <a
+            className="App-link"
+            href={`https://www.onegraph.com/dashboard/app/${ONE_GRAPH_APP_ID}/auth/auth-guardian`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Edit your rules
+          </a>
+        </span>
+        {' | '}
+        <span>
+          <a
+            className="App-link"
+            href="https://www.onegraph.com/docs/auth_guardian.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            AuthGuardian Docs
+          </a>
+        </span>
+        {' | '}
+        <span>
+          <a href={gitHubLink} target="_blank" rel="noopener noreferrer">
+            {gitHubIcon}
+          </a>
+        </span>
+        {!!GIT_CHECKOUT_LINK ? ' | ' : ''}
+        <span>
+          {!!GIT_CHECKOUT_LINK ? (
+            <button
+              onClick={(event) => {
+                copy(`git clone ${GIT_CHECKOUT_LINK}`, {
+                  message: 'Copy/paste to check out your git repo locally',
+                  format: 'text/plain',
+                  onCopy: () => {
+                    setCopied(() => true)
+                  },
+                })
+              }}
             >
-              Edit your rules
-            </a>
-          </span>
+              {copied
+                ? 'Copied! Paste to check out your git repo'
+                : 'Check out locally'}
+            </button>
+          ) : null}
           {' | '}
           <span>
             <a
@@ -75,85 +110,48 @@ export default function Alert({ preview }) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              AuthGuardian Docs
+              View the Vercel dashboard
             </a>
           </span>
-          {' | '}
-          <span>
-            <a href={gitHubLink} target="_blank" rel="noopener noreferrer">
-              {gitHubIcon}
-            </a>
-          </span>
-          {!!GIT_CHECKOUT_LINK ? ' | ' : ''}
-          <span>
-            {!!GIT_CHECKOUT_LINK ? (
-              <button
-                onClick={(event) => {
-                  copy(`git checkout ${GIT_CHECKOUT_LINK}`, {
-                    message: 'Copy/paste to check out your git repo locally',
-                    format: 'text/plain',
-                    onCopy: () => {
-                      setCopied(() => true)
-                    },
-                  })
-                }}
-              >
-                {copied
-                  ? 'Copied! Paste to check out your git repo'
-                  : 'Check out locally'}
-              </button>
-            ) : null}
-            {' | '}
-            <span>
-              <a
-                className="App-link"
-                href="https://www.onegraph.com/docs/auth_guardian.html"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View the Vercel dashboard
-              </a>
-            </span>
-          </span>
-        </div>
+        </span>
+      </div>
 
-        <div className="py-2 text-center text-sm">
-          <span>Example Pages: </span>
-          <span>
-            <a href={`/server-side-auth-data-fetch/1`}>
-              Server-side GitHub API call
-            </a>
-          </span>
-          {' | '}{' '}
-          <span>
-            <a href={`/logged-in-user-data-fetch/1`}>Requiring login</a>
-          </span>
-          {' | '}
-          <span>
-            <a href="/admin">
-              Requiring <code>admin</code> role
-            </a>
-          </span>
-          {' | '}{' '}
-          <a href="/feedback">Submit Feedback (create GitHub issue) example</a>
-          {' | '}{' '}
-          {!!username ? (
-            <>
-              {`Welcome, ${username}`}{' '}
-              <button
-                onClick={() => {
-                  auth.destroy()
-                  window.location.reload()
-                }}
-              >
-                Log out
-              </button>
-            </>
-          ) : (
-            <a href="/">Login</a>
-          )}
-        </div>
-      </Container>
+      <div className="py-2 text-center text-sm block">
+        <span>Example Pages: </span>
+        <span>
+          <a href={`/server-side-auth-data-fetch/1`}>
+            Server-side GitHub API call
+          </a>
+        </span>
+        {' | '}{' '}
+        <span>
+          <a href={`/logged-in-user-data-fetch/1`}>Requiring login</a>
+        </span>
+        {' | '}
+        <span>
+          <a href="/admin">
+            Requiring <code>admin</code> role
+          </a>
+        </span>
+        {' | '}{' '}
+        <a href="/feedback">Submit Feedback (create GitHub issue) example</a>
+        {' | '}{' '}
+        {!!username ? (
+          <>
+            {`Welcome, ${username}`}{' '}
+            <button
+              onClick={() => {
+                auth.destroy()
+                window.location.reload()
+              }}
+            >
+              Log out
+            </button>
+          </>
+        ) : (
+          <a href="/">Login</a>
+        )}
+      </div>
     </div>
   )
 }

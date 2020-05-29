@@ -50,7 +50,7 @@ export default function Index({ allIssues }) {
         <Head>
           <title>Next.js Auth Playground with OneGraph's AuthGuardian</title>
         </Head>
-        <Container>
+        <div className="mx-auto mpx-5">
           {corsConfigurationRequired ? corsPrompt(ONE_GRAPH_APP_ID) : null}
           <header className="App-header">
             <p className="description">
@@ -92,7 +92,7 @@ export default function Index({ allIssues }) {
               return (
                 <button
                   key={service.slug}
-                  className="card"
+                  className="card w-1/4"
                   onClick={async () => {
                     await auth.login(service.slug)
                     const isLoggedIn = await auth.isLoggedIn(service.slug)
@@ -131,7 +131,7 @@ export default function Index({ allIssues }) {
               ></textarea>
             </>
           )}
-        </Container>
+        </div>
       </Layout>
 
       <style jsx>{`
